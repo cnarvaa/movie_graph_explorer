@@ -13,17 +13,22 @@ graph_controller = Blueprint('graph_controller', __name__,
 @graph_controller.route('/movie/<title>/', defaults={'augmented': "True"})
 @graph_controller.route('/movie/<title>/<augmented>')
 def main_info(title, augmented):
-    data = neo4j_graph.movie("Jurassic Park")[0]
-    augmented_data = None
-    imdb_id = data["imdbId"]
-    if augmented == "True":
-        try:
-            augmented_data = get_movie_info(imdb_id)
-        except Exception as e:
-            print("something happened trying to get info from SPARKL", e)
-        else:
-            augmented_data = augmented_data["results"]["bindings"]
-            genres = jmespath.search("join(',',[*].genreLabel.value)", augmented_data)
-            augmented_data = augmented_data[0]
-            augmented_data.update({"genreLabel": {"value": genres}})
-    return render_template('movie.html', movie_data=data, augmented_data=augmented_data)
+    try:
+        data = neo4j_graph.movie(title)[0]
+    except IndexError:
+        return render_template('responses/not_found.html', title=title)
+    else:
+        augmented_data = None
+        imdb_id = data["imdbId"]
+        if augmented == "True":
+            try:
+                augmented_data = get_movie_info(imdb_id)
+            except Exception as e:
+                print("something happened trying to get info from SPARQL", e)
+            else:
+                augmented_data = augmented_data["results"]["bindings"]
+                genres = jmespath.search("join(',',[*].genreLabel.value)", augmented_data)
+                if augmented_data:
+                    augmented_data = augmented_data[0]
+                    augmented_data.update({"genreLabel": {"value": genres}})
+        return render_template('movie.html', movie_data=data, augmented_data=augmented_data)

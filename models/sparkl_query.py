@@ -4,9 +4,9 @@ import requests
 def get_movie_info(id):
     url = 'https://query.wikidata.org/sparql'
     query = f"""SELECT ?movie ?movieLabel ?main_subjectLabel ?genreLabel ?box WHERE {{
-        ?movie wdt:P345 "{id}";
-            wdt:P921 ?main_subject;
-            wdt:P136 ?genre.
+        ?movie wdt:P345 "{id}".
+        OPTIONAL {{ ?movie wdt:P921 ?main_subject. }}
+        OPTIONAL {{ ?movie wdt:P136 ?genre. }}
         ?movie p:P2142 ?statement.
         ?statement ps:P2142 ?box
         SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}

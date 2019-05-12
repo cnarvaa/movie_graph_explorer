@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}
+Movie not found
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 center">
+            <img class="responsive-img" src="{{ url_for('static', filename = 'img/search.gif') }}" alt="">
+        </div>
+    </div>
+    <div class="row">
+        <h1><strong>404: </strong>{{ title }} don't found.</h1>
+    </div>
+</div>
+{% endblock %}
