@@ -36,7 +36,7 @@ class KnowledgeRecommendation(object):
 
     def movie(self, title):
         query = ('MATCH (movie:Movie) ' +
-                 f'WHERE movie.title =~ "{title}" ' +
+                 f'WHERE movie.title =~ "(?i){title}" ' +
                  'RETURN movie')
         results = self.session.run(query)
         return [self.serialize_movie(record['movie']) for record in results.data()]
