@@ -1,13 +1,5 @@
-# Flask MVC Template
+# Movie GraphExplorer
+The purpose of this project is to explore semantic technologies such as Neo4j's cypher and Sparql.
 
-Template for using MVC pattern with Flask and Peewee
-
-## Requisites:
-* Flask
-* Peewee
-
-# Usage:
-* Clonate the repo
-* Use the example model, controller and templates to create your own
-* Register the models/controllers in the app.py file
-* Run app.py
+# Use
+Use your preferred environment utility and install the requirements.txt file.
