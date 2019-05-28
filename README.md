@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # Flask MVC Template
 
 Template for using MVC pattern with Flask and Peewee
@@ -12,7 +11,6 @@ Template for using MVC pattern with Flask and Peewee
 * Use the example model, controller and templates to create your own
 * Register the models/controllers in the app.py file
 * Run app.py
-=======
 # Recommender system with semantic knowledge
 
 ## Requirements
@@ -32,4 +30,3 @@ jmespath
 https://neo4j.com/developer/python/
 https://github.com/neo4j/neo4j-python-driver
 https://neo4j.com/docs/cypher-refcard/current/
->>>>>>> Stashed changes
