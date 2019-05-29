@@ -1,6 +1,18 @@
 # Movie GraphExplorer
 The purpose of this project is to explore semantic technologies such as Neo4j's cypher and Sparql.
 
+# Knowledge Graphs Introduction.
+
+The [slides from NEO4j](https://www.slideshare.net/neo4j/knowledge-graphs-the-power-of-graphbased-search?from_action=save) are a good point to start.
+I strongly recommend you to explore these slides:
+* 3-7
+* 23-25
+* 32-34
+
+This [slides from Microsoft](https://kdd2018tutorialt39.azurewebsites.net/KDD%20Tutorial%20T39.pdf) are more academic but they pinpoint the actual research topics on the field.
+
+You can find the slides in the slides folder.
+
 ## Requirements
 * neo4j
 * jmespath
