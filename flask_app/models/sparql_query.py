@@ -14,8 +14,10 @@ def get_movie_info(id):
         ?movie wdt:P345 "{id}".
         OPTIONAL {{ ?movie wdt:P921 ?main_subject. }}
         OPTIONAL {{ ?movie wdt:P136 ?genre. }}
-        ?movie p:P2142 ?statement.
-        ?statement ps:P2142 ?box
+        OPTIONAL {{
+            ?movie p:P2142 ?statement.
+            ?statement ps:P2142 ?box
+        }}
         SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
         }}"""
     data = get_data(query)
