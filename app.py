@@ -7,7 +7,6 @@ app = Flask(__name__)
 app.secret_key = 'SECRET'
 
 # Then register a blueprint with the controller
-# app.register_blueprint(example_controller)
 app.register_blueprint(graph_controller)
 
 
