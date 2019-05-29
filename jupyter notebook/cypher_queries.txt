@@ -1,0 +1,42 @@
+// get movie info
+MATCH (movie:Movie)
+WHERE movie.title = "Avatar"
+RETURN movie
+
+// movies with the same movie genre
+MATCH (movie:Movie)
+WHERE movie.title = "Avatar"
+WITH movie.genre as genre
+MATCH (movies:Movie)
+WHERE movies.genre = genre
+RETURN movies
+LIMIT 100
+
+// other movies by the movie director
+
+MATCH (movie:Movie)<-[:DIRECTED]-(director:Director)
+WHERE movie.title = "Avatar"
+MATCH (movies:Movie)<-[:DIRECTED]-(director)
+RETURN movies
+LIMIT 100
+
+// more movies by an actor
+
+MATCH (movie:Movie)<-[:ACTS_IN]-(actor:Actor)
+WHERE actor.name = "Michael J. Fox"
+RETURN movie
+
+// more movies by an actor and genre
+
+MATCH (movie:Movie)<-[:ACTS_IN]-(actor:Actor)
+WHERE actor.name = "Michael J. Fox" and movie.genre="Comedy"
+RETURN movie
+
+// movies from one specific genre, from the actors that acted with one actor
+MATCH (actor:Actor)-[:ACTS_IN]->(movie:Movie)<-[:ACTS_IN]-(actors:Actor)
+WHERE actor.name = "Michael J. Fox"
+WITH actors
+MATCH (actors)-[:ACTS_IN]->(movies:Movie)
+WHERE movies.genre="Animation"
+RETURN movies, actors
+LIMIT 100
