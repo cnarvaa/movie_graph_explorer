@@ -32,8 +32,9 @@
                 <h6><strong>imdb</strong></h6> {{ movie_data.imdbId }}
             </div>
         </div>
-
-        <div class="col s12">
+    </div>
+    <div class="row">
+        <div class="col s6">
             <h5>More data</h5>
             {% if augmented_data %}
             Here some additional info extracted from <strong>WikiData</strong>
@@ -51,6 +52,31 @@
             </table>
             {% else %}
             <span class="red-text text-darken-2">No more data for this movie.</span>
+            {% endif %}
+        </div>
+        <div class="col s6">
+            {% if related_movies %}
+            <H5>Related movies</H5><br>
+            By production company <br>
+            {% for company, movies in related_movies.items() %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ company }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movie in movies %}
+                    <tr>
+                        <td>
+                            <a href="{{ movie.internal_source }}">{{ movie.name }}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% endfor %}
             {% endif %}
         </div>
     </div>

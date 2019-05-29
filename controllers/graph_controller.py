@@ -1,7 +1,11 @@
 from flask import Blueprint, render_template
 import jmespath
-from models.sparkl_query import get_movie_info
+from models.sparql_query import get_movie_info
+from models.sparql_query import get_more_movies_by_production_company
 from models.neo4j_query import KnowledgeRecommendation
+from utils.dict import group_by_key
+
+import json
 
 neo4j_graph = KnowledgeRecommendation("bolt://localhost:11004", "neo4j", "123456")
 
@@ -23,6 +27,7 @@ def main_info(title, augmented):
         if augmented == "True":
             try:
                 augmented_data = get_movie_info(imdb_id)
+                related_movies = get_more_movies_by_production_company(imdb_id)
             except Exception as e:
                 print("something happened trying to get info from SPARQL", e)
             else:
@@ -31,4 +36,13 @@ def main_info(title, augmented):
                 if augmented_data:
                     augmented_data = augmented_data[0]
                     augmented_data.update({"genreLabel": {"value": genres}})
-        return render_template('movie.html', movie_data=data, augmented_data=augmented_data)
+                if related_movies:
+                    related_movies = jmespath.search(
+                        "results.bindings[*].{internal_source: null, external_source:new_movies.value, name:new_moviesLabel.value, production_company:production_companyLabel.value}", related_movies)
+                    for movie in related_movies:
+                        movie["internal_source"] = f"http://127.0.0.1:5000/movie/{movie.get('name')}"
+
+                    related_movies = group_by_key(related_movies, "production_company")
+        print(json.dumps(related_movies))
+        return render_template('movie.html', movie_data=data, augmented_data=augmented_data,
+                               related_movies=related_movies)
